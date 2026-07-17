@@ -1,6 +1,6 @@
 {
   "name": "@dlvr/n8n-nodes-dlvr",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Create, sell, manage, and download dlvr.sh file deliveries in n8n workflows and AI agents.",
   "license": "MIT",
   "homepage": "https://dlvr.sh/docs/n8n/",
@@ -18,11 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dlvr-sh/packages.git",
-    "directory": "n8n"
+    "url": "https://github.com/dlvr-sh/n8n-nodes-dlvr.git"
   },
   "bugs": {
-    "url": "https://github.com/dlvr-sh/packages/issues"
+    "url": "https://github.com/dlvr-sh/n8n-nodes-dlvr/issues"
   },
   "engines": {
     "node": ">=22.14.0"
@@ -33,7 +32,6 @@
     "dev": "n8n-node dev",
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix",
-    "test": "bun test ../n8n-tests",
     "prepublishOnly": "n8n-node prerelease"
   },
   "files": [

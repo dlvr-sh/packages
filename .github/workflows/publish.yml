@@ -2,7 +2,7 @@ name: Publish package
 
 on:
   push:
-    tags: ['cli-v*', 'mcp-v*', 'sdk-v*', 'n8n-v*']
+    tags: ['cli-v*', 'mcp-v*', 'sdk-v*']
 
 permissions:
   contents: read
@@ -35,8 +35,7 @@ jobs:
           case "$GITHUB_REF_NAME" in
             cli-v*)  package_dir=cli; expected_version=${GITHUB_REF_NAME#cli-v} ;;
             mcp-v*)  package_dir=mcp; expected_version=${GITHUB_REF_NAME#mcp-v} ;;
-            sdk-v*)  package_dir=sdk; expected_version=${GITHUB_REF_NAME#sdk-v} ;;
-            n8n-v*) package_dir=n8n; expected_version=${GITHUB_REF_NAME#n8n-v} ;;
+            sdk-v*) package_dir=sdk; expected_version=${GITHUB_REF_NAME#sdk-v} ;;
             *) exit 1 ;;
           esac
           echo "PACKAGE_DIR=$package_dir" >> "$GITHUB_ENV"
@@ -63,47 +62,3 @@ jobs:
         run: npm publish --access public --tag next --provenance
         env:
           RELEASE_MODE: '1'
-
-  scan-n8n:
-    if: startsWith(github.ref_name, 'n8n-v')
-    needs: publish
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v6
-        with:
-          node-version: '22.22.2'
-          package-manager-cache: false
-
-      - name: Scan the published n8n artifact
-        shell: bash
-        env:
-          PACKAGE_VERSION: ${{ needs.publish.outputs.expected-version }}
-        run: |
-          scan_package() {
-            local scanner_version="$1"
-            local output
-            local status
-
-            for attempt in 1 2 3 4 5 6; do
-              status=0
-              output="$(corepack pnpm dlx "@n8n/scan-community-package@$scanner_version" "@dlvr/n8n-nodes-dlvr@$PACKAGE_VERSION" 2>&1)" || status=$?
-              printf '%s\n' "$output"
-
-              if [ "$status" -eq 0 ] \
-                && grep -Fq "has passed all security checks" <<< "$output" \
-                && ! grep -Fq "has failed security checks" <<< "$output"; then
-                return 0
-              fi
-
-              if [ "$attempt" -lt 6 ]; then
-                sleep 10
-              fi
-            done
-
-            return 1
-          }
-
-          # The Creator Portal currently behaves like 0.27, while latest has
-          # newer source/tarball scoping. Both must accept the exact artifact.
-          scan_package 0.27.0
-          scan_package latest

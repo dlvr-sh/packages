@@ -1,11 +1,11 @@
 {
-  "node": "n8n-nodes-base.dlvr",
+  "node": "@dlvr/n8n-nodes-dlvr",
   "nodeVersion": "1.0",
   "codexVersion": "1.0",
-  "categories": ["Data & Storage", "Development", "AI"],
+  "categories": ["Data & Storage", "Development"],
   "resources": {
     "credentialDocumentation": [
-      { "url": "https://dlvr.sh/account/api/" }
+      { "url": "https://dlvr.sh/docs/n8n/#credentials" }
     ],
     "primaryDocumentation": [
       { "url": "https://dlvr.sh/docs/n8n/" }

@@ -13,7 +13,7 @@ export class DlvrApi implements ICredentialType {
 
 	icon: Icon = { light: 'file:../nodes/Dlvr/dlvr.svg', dark: 'file:../nodes/Dlvr/dlvr.dark.svg' };
 
-	documentationUrl = 'https://dlvr.sh/account/api/';
+	documentationUrl = 'https://dlvr.sh/docs/n8n/#credentials';
 
 	properties: INodeProperties[] = [
 		{
