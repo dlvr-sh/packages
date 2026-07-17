@@ -8,6 +8,12 @@ Install `@dlvr/n8n-nodes-dlvr` from **Settings → Community Nodes** in n8n. Ver
 
 Upload and account-management operations require a Pro or Team API key from [the dlvr.sh API dashboard](https://dlvr.sh/account/api/). Public share downloads do not require an API key.
 
+## Quick example
+
+To share a build artifact, add the **dlvr.sh** node after the step that produces binary data, select **Create Delivery**, choose the binary property, and set the retention period. The node returns the temporary share URL in `url`, ready for a later email, Slack, issue, or database step.
+
+For an AI Agent workflow, connect the **dlvr.sh** node as a tool, select **Create Delivery**, and provide a public HTTPS source URL. The agent receives the same temporary share URL as structured output.
+
 ## Operations
 
 - **Create Delivery** from one or all binary properties on each incoming item.
