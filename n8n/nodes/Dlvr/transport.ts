@@ -1,4 +1,3 @@
-/* eslint-disable @n8n/community-nodes/require-node-api-error */
 import type { IDataObject, IHttpRequestOptions, IN8nHttpFullResponse } from 'n8n-workflow';
 import { sleepWithAbort } from 'n8n-workflow';
 import type { HttpRequest, MultipartSource } from './sources';
@@ -139,6 +138,7 @@ async function requestWithRetry(
 ) {
 	for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt += 1) {
 		let response: IN8nHttpFullResponse | undefined;
+		let requestError: unknown;
 		try {
 			response = fullResponse(
 				await request({
@@ -151,8 +151,9 @@ async function requestWithRetry(
 			);
 			if (!retryable(response.statusCode) || attempt === RETRY_ATTEMPTS - 1) return response;
 		} catch (error) {
-			if (attempt === RETRY_ATTEMPTS - 1) throw error;
+			requestError = error;
 		}
+		if (attempt === RETRY_ATTEMPTS - 1 && requestError) throw requestError;
 		await sleepWithAbort(delayFor(attempt, response), signal);
 	}
 	throw new DlvrRequestError('Request retry loop ended unexpectedly.');
@@ -232,6 +233,7 @@ async function uploadPart(
 	const file = session.files[fileIndex]!;
 	for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt += 1) {
 		options.signal?.throwIfAborted();
+		let uploadError: unknown;
 		let current = part;
 		if (attempt > 0) {
 			const refreshed = await apiJson<{ parts: SignedPart[] }>(
@@ -270,8 +272,9 @@ async function uploadPart(
 				throw new DlvrRequestError('Upload to storage failed.', { status: response.statusCode });
 			}
 		} catch (error) {
-			if (attempt === RETRY_ATTEMPTS - 1) throw error;
+			uploadError = error;
 		}
+		if (attempt === RETRY_ATTEMPTS - 1 && uploadError) throw uploadError;
 		await sleepWithAbort(delayFor(attempt), options.signal);
 	}
 	throw new DlvrRequestError('Upload to storage failed after retrying.');

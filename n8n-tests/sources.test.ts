@@ -10,6 +10,7 @@ import {
 describe('source URL policy', () => {
 	test('rejects local, credentialed, non-HTTPS, and private literal destinations', () => {
 		for (const value of [
+			'not a URL',
 			'http://example.com/file',
 			'https://localhost/file',
 			'https://127.0.0.1/file',

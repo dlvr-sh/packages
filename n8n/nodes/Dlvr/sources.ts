@@ -1,4 +1,3 @@
-/* eslint-disable @n8n/community-nodes/require-node-api-error */
 import type { IHttpRequestOptions, IN8nHttpFullResponse } from 'n8n-workflow';
 
 export const URL_BUFFER_FALLBACK_BYTES = 64 * 1024 * 1024;
@@ -63,12 +62,8 @@ export function addressIsPrivate(address: string) {
 }
 
 export function assertPublicHttpsUrl(value: string) {
-	let url: URL;
-	try {
-		url = new URL(value);
-	} catch {
-		throw new Error('Source URL must be a valid HTTPS URL.');
-	}
+	if (!URL.canParse(value)) throw new Error('Source URL must be a valid HTTPS URL.');
+	const url = new URL(value);
 	if (url.protocol !== 'https:') throw new Error('Source URL must use HTTPS.');
 	if (url.username || url.password) throw new Error('Source URL must not contain credentials.');
 	const hostname = url.hostname.toLowerCase().replace(/^\[|\]$/g, '');
