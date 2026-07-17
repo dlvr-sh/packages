@@ -79,12 +79,31 @@ jobs:
         env:
           PACKAGE_VERSION: ${{ needs.publish.outputs.expected-version }}
         run: |
-          for attempt in 1 2 3 4 5 6; do
-            if corepack pnpm dlx @n8n/scan-community-package@latest "@dlvr/n8n-nodes-dlvr@$PACKAGE_VERSION"; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 6 ]; then
-              sleep 10
-            fi
-          done
-          exit 1
+          scan_package() {
+            local scanner_version="$1"
+            local output
+            local status
+
+            for attempt in 1 2 3 4 5 6; do
+              status=0
+              output="$(corepack pnpm dlx "@n8n/scan-community-package@$scanner_version" "@dlvr/n8n-nodes-dlvr@$PACKAGE_VERSION" 2>&1)" || status=$?
+              printf '%s\n' "$output"
+
+              if [ "$status" -eq 0 ] \
+                && grep -Fq "has passed all security checks" <<< "$output" \
+                && ! grep -Fq "has failed security checks" <<< "$output"; then
+                return 0
+              fi
+
+              if [ "$attempt" -lt 6 ]; then
+                sleep 10
+              fi
+            done
+
+            return 1
+          }
+
+          # The Creator Portal currently behaves like 0.27, while latest has
+          # newer source/tarball scoping. Both must accept the exact artifact.
+          scan_package 0.27.0
+          scan_package latest

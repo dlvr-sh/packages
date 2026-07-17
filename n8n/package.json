@@ -1,6 +1,6 @@
 {
   "name": "@dlvr/n8n-nodes-dlvr",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Create, sell, manage, and download dlvr.sh file deliveries in n8n workflows and AI agents.",
   "license": "MIT",
   "homepage": "https://dlvr.sh/docs/n8n/",
@@ -37,7 +37,9 @@
     "prepublishOnly": "n8n-node prerelease"
   },
   "files": [
-    "dist",
+    "dist/**/*.js",
+    "dist/**/*.json",
+    "dist/**/*.svg",
     "README.md",
     "LICENSE"
   ],

@@ -30,6 +30,9 @@ for (const directory of publicPackages) {
   for (const relative of files) {
     const file = join(packageRoot, relative);
     if (!(await stat(file)).isFile()) continue;
+    if (directory === 'n8n' && (relative.endsWith('.d.ts') || relative.endsWith('.map'))) {
+      throw new Error(`${manifest.name} packed non-runtime build output ${relative}.`);
+    }
     const contents = await readFile(file).catch(() => null);
     if (!contents) continue;
     const text = contents.toString('utf8');
