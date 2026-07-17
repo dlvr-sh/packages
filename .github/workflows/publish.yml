@@ -43,8 +43,10 @@ jobs:
         run: node -e "const p=require('./' + process.env.PACKAGE_DIR + '/package.json'); if(p.version !== process.env.EXPECTED_VERSION) throw new Error('Tag and package version differ')"
 
       - name: Configure temporary npm token
-        if: ${{ secrets.NPM_TOKEN != '' }}
-        run: npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+        run: |
+          if [ -n "$NPM_TOKEN" ]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
