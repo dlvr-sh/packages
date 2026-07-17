@@ -1,0 +1,50 @@
+{
+  "name": "@dlvr/cli",
+  "version": "0.5.2",
+  "type": "module",
+  "description": "Upload, download, and manage dlvr.sh file deliveries from the terminal.",
+  "license": "MIT",
+  "homepage": "https://dlvr.sh/docs/cli/",
+  "author": {
+    "name": "Marius Bolik",
+    "email": "marius@eyloo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlvr-sh/packages.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/dlvr-sh/packages/issues"
+  },
+  "bin": {
+    "dlvr": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "ink": "^7.0.1",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.2.0",
+    "react-devtools-core": "^7.0.1",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "ink-testing-library": "^4.0.0"
+  },
+  "scripts": {
+    "build": "bun build ./src/main.ts --target=node --outfile ./dist/cli.js --banner '#!/usr/bin/env node'",
+    "test": "bun test ./src",
+    "prepublishOnly": "bun run build && bun test ./src"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

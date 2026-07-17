@@ -1,0 +1,55 @@
+name: Publish package
+
+on:
+  push:
+    tags: ['cli-v*', 'mcp-v*', 'sdk-v*', 'n8n-v*']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-release
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Select package
+        shell: bash
+        run: |
+          case "$GITHUB_REF_NAME" in
+            cli-v*)  echo "PACKAGE_DIR=cli" >> "$GITHUB_ENV"; echo "EXPECTED_VERSION=${GITHUB_REF_NAME#cli-v}" >> "$GITHUB_ENV" ;;
+            mcp-v*)  echo "PACKAGE_DIR=mcp" >> "$GITHUB_ENV"; echo "EXPECTED_VERSION=${GITHUB_REF_NAME#mcp-v}" >> "$GITHUB_ENV" ;;
+            sdk-v*)  echo "PACKAGE_DIR=sdk" >> "$GITHUB_ENV"; echo "EXPECTED_VERSION=${GITHUB_REF_NAME#sdk-v}" >> "$GITHUB_ENV" ;;
+            n8n-v*) echo "PACKAGE_DIR=n8n" >> "$GITHUB_ENV"; echo "EXPECTED_VERSION=${GITHUB_REF_NAME#n8n-v}" >> "$GITHUB_ENV" ;;
+            *) exit 1 ;;
+          esac
+
+      - run: bun install --frozen-lockfile
+      - run: bun run verify
+
+      - name: Verify tag version
+        run: node -e "const p=require('./' + process.env.PACKAGE_DIR + '/package.json'); if(p.version !== process.env.EXPECTED_VERSION) throw new Error('Tag and package version differ')"
+
+      - name: Configure temporary npm token
+        if: ${{ secrets.NPM_TOKEN != '' }}
+        run: npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to next with provenance
+        working-directory: ${{ env.PACKAGE_DIR }}
+        run: npm publish --access public --tag next --provenance
+        env:
+          RELEASE_MODE: '1'

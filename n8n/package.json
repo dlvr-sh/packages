@@ -1,0 +1,66 @@
+{
+  "name": "@dlvr/n8n-nodes-dlvr",
+  "version": "0.1.0",
+  "description": "Create, sell, manage, and download dlvr.sh file deliveries in n8n workflows and AI agents.",
+  "license": "MIT",
+  "homepage": "https://dlvr.sh/docs/n8n/",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "dlvr",
+    "file-sharing",
+    "file-delivery",
+    "ai-agent"
+  ],
+  "author": {
+    "name": "Marius Bolik",
+    "email": "marius@eyloo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlvr-sh/packages.git",
+    "directory": "n8n"
+  },
+  "bugs": {
+    "url": "https://github.com/dlvr-sh/packages/issues"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "test": "bun test ../n8n-tests",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/DlvrApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Dlvr/Dlvr.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.39.3",
+    "eslint": "9.39.4",
+    "prettier": "3.8.3",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

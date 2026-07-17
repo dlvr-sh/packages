@@ -1,0 +1,39 @@
+{
+  "name": "@dlvr/mcp",
+  "version": "0.3.2",
+  "type": "module",
+  "description": "Local MCP server for uploading, downloading, and managing dlvr.sh file deliveries.",
+  "license": "MIT",
+  "homepage": "https://dlvr.sh/docs/mcp/",
+  "author": {
+    "name": "Marius Bolik",
+    "email": "marius@eyloo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlvr-sh/packages.git",
+    "directory": "mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/dlvr-sh/packages/issues"
+  },
+  "bin": {
+    "dlvr-mcp": "dist/mcp.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "bun build ./src/main.ts --target=node --outfile ./dist/mcp.js --banner '#!/usr/bin/env node'",
+    "test": "bun test ./src",
+    "prepublishOnly": "bun run build && bun test ./src"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

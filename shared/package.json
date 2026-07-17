@@ -1,0 +1,11 @@
+{
+  "name": "@dlvr/shared",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Unpublished shared protocol source for the dlvr.sh public packages.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

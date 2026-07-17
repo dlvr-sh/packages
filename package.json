@@ -1,0 +1,19 @@
+{
+  "name": "@dlvr/packages",
+  "private": true,
+  "type": "module",
+  "workspaces": ["cli", "mcp", "sdk", "shared", "n8n"],
+  "engines": { "node": ">=22.14.0" },
+  "scripts": {
+    "build": "bun run --cwd cli build && bun run --cwd mcp build && bun run --cwd sdk build && bun run --cwd n8n build",
+    "test": "bun test cli/src mcp/src sdk/src shared/src n8n-tests",
+    "lint": "bun run --cwd n8n lint",
+    "verify": "bun run lint && bun run test && bun run build && bun run audit:packages",
+    "audit:packages": "bun ./scripts/audit-packages.ts"
+  },
+  "devDependencies": {
+    "@dlvr/shared": "workspace:*",
+    "@types/bun": "^1.3.14",
+    "typescript": "^5.9.3"
+  }
+}

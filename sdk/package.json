@@ -1,0 +1,43 @@
+{
+  "name": "@dlvr/sdk",
+  "version": "0.3.2",
+  "type": "module",
+  "description": "Browser and server SDK for resumable dlvr.sh file delivery workflows.",
+  "license": "MIT",
+  "homepage": "https://dlvr.sh/docs/sdk/",
+  "author": {
+    "name": "Marius Bolik",
+    "email": "marius@eyloo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlvr-sh/packages.git",
+    "directory": "sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/dlvr-sh/packages/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --target=browser --outfile ./dist/index.js && tsc -p tsconfig.json --emitDeclarationOnly",
+    "test": "bun test ./src",
+    "prepublishOnly": "bun run build && bun test ./src"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
