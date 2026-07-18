@@ -2,8 +2,8 @@
 
 Browser and server SDK for dlvr.sh file delivery.
 
-Programmatic API access requires a paid dlvr.sh plan and an account API key from
-`https://dlvr.sh/account/api/`.
+Programmatic API access requires a verified dlvr.sh account with a permanent email and an account API key from
+`https://dlvr.sh/account/api/`. Free personal accounts include 10 deliveries in a rolling 24-hour window shared with browser and other API clients.
 
 ```ts
 import { createDlvrClient, loginWithDlvr } from "@dlvr/sdk";

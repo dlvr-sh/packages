@@ -6,7 +6,7 @@ The official dlvr.sh community node for n8n. Create temporary file deliveries, r
 
 Install `@dlvr/n8n-nodes-dlvr` from **Settings → Community Nodes** in n8n. Verified installation through the n8n node picker will become available after n8n completes its review.
 
-Upload and account-management operations require a Pro or Team API key. Follow the public [credential setup guide](https://dlvr.sh/docs/n8n/#credentials) to create and add one. Public share downloads do not require an API key.
+Upload and account-management operations require an API key from a verified account with a permanent email. Free personal accounts include 10 deliveries in a rolling 24-hour window shared with browser and other API clients. Follow the public [credential setup guide](https://dlvr.sh/docs/n8n/#credentials) to create and add one. Public share downloads do not require an API key.
 
 ## Quick example
 

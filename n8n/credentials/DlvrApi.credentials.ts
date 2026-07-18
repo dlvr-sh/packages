@@ -23,7 +23,7 @@ export class DlvrApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			placeholder: 'dlvr_...',
-			description: 'Create a paid-plan API key in the dlvr.sh dashboard',
+			description: 'Create an API key from a verified permanent-email account in the dlvr.sh dashboard',
 		},
 	];
 

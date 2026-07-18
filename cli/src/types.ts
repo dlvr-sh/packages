@@ -33,9 +33,16 @@ export interface CliConfig {
     maxNotifyRecipients: number;
   };
   account?: {
-    plan: "pro" | "team";
+    plan: "free" | "pro" | "team";
     planName: string;
   };
+  deliveryQuota?: {
+    windowSeconds: number;
+    limit: number;
+    used: number;
+    remaining: number;
+    nextAvailableAt: string | null;
+  } | null;
   workspace?: {
     id: string;
     name?: string;

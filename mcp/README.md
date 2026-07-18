@@ -20,7 +20,7 @@ claude mcp add dlvr \
   -- npx -y @dlvr/mcp
 ```
 
-`DLVR_API_KEY` must be an API key from a paid dlvr.sh account for upload and management tools. Public recipient downloads do not require an API key.
+`DLVR_API_KEY` must be an API key from a verified dlvr.sh account with a permanent email. Free personal accounts include 10 deliveries in a rolling 24-hour window shared with browser and other API clients. Public recipient downloads do not require an API key.
 
 ## Tools
 

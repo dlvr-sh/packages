@@ -10,7 +10,7 @@ npm install -g @dlvr/cli
 
 ## Usage
 
-CLI access requires an active paid dlvr.sh subscription and an API key.
+CLI access requires a verified dlvr.sh account with a permanent email and an API key. Free personal accounts include 10 deliveries in a rolling 24-hour window shared with browser and other API clients.
 
 ```sh
 dlvr login

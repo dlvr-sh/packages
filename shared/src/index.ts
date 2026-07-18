@@ -13,6 +13,9 @@ export const DLVR_AUTH_ERROR_CODES = {
   missingApiKey: "api_key_required",
   invalidApiKey: "api_key_invalid",
   paidSubscriptionRequired: "paid_subscription_required",
+  verifiedEmailRequired: "verified_email_required",
+  permanentEmailRequired: "permanent_email_required",
+  emailPolicyUnavailable: "email_policy_unavailable",
   accountMismatch: "api_key_account_mismatch",
 } as const;
 

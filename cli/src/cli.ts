@@ -120,8 +120,10 @@ export async function runCli(argv: string[], deps: CliDeps = {}) {
         plan: config.account?.plan,
         planName: config.account?.planName,
         workspace: config.workspace ?? null,
+        deliveryQuota: config.deliveryQuota ?? null,
       };
-      stdout(parsed.json ? `${JSON.stringify(payload, null, 2)}\n` : `dlvr.sh ${payload.planName || "Paid"} access on ${baseUrl}${payload.workspace ? ` · workspace ${payload.workspace.name || payload.workspace.id}` : " · personal scope"}\n`);
+      const quota = payload.deliveryQuota ? ` · ${payload.deliveryQuota.remaining}/${payload.deliveryQuota.limit} deliveries remaining` : "";
+      stdout(parsed.json ? `${JSON.stringify(payload, null, 2)}\n` : `dlvr.sh ${payload.planName || "account"} access on ${baseUrl}${payload.workspace ? ` · workspace ${payload.workspace.name || payload.workspace.id}` : " · personal scope"}${quota}\n`);
       return 0;
     }
 
