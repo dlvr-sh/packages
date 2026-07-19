@@ -9,8 +9,19 @@ Open-source clients and integrations for [dlvr.sh](https://dlvr.sh), temporary f
 | [`@dlvr/mcp`](./mcp) | Local MCP server for coding agents |
 | [`@dlvr/n8n-nodes-dlvr`](./n8n) | n8n workflow and AI Agent integration |
 | [`@dlvr/shared`](./shared) | Unpublished protocol source bundled into public clients |
+| [`dlvr` Agent Skill](./skills/dlvr) | Safe file-delivery workflows for compatible AI agents |
 
 The public packages use the same resumable multipart protocol. File bytes upload directly to signed private-storage URLs; API credentials are sent only to dlvr.sh API routes.
+
+## Agent Skill
+
+Install the first-party dlvr skill with the open Agent Skills CLI:
+
+```sh
+npx skills add dlvr-sh/packages --skill dlvr
+```
+
+The skill prefers local MCP for agent-to-human and agent-to-agent file delivery, with CLI and JavaScript SDK fallbacks.
 
 ## Development
 
@@ -25,7 +36,9 @@ bun run verify
 
 ## Releases
 
-Releases are built by `.github/workflows/publish.yml` from package-specific tags and initially published under the npm `next` tag: `cli-vX.Y.Z`, `sdk-vX.Y.Z`, `mcp-vX.Y.Z`, or `n8n-vX.Y.Z`.
+Releases for `@dlvr/cli`, `@dlvr/sdk`, and `@dlvr/mcp` are built by `.github/workflows/publish.yml` from package-specific tags and initially published under the npm `next` tag: `cli-vX.Y.Z`, `sdk-vX.Y.Z`, or `mcp-vX.Y.Z`.
+
+`@dlvr/n8n-nodes-dlvr` releases only from the standalone [`dlvr-sh/n8n-nodes-dlvr`](https://github.com/dlvr-sh/n8n-nodes-dlvr) repository with a `vX.Y.Z` tag.
 
 After installation and live smoke tests, maintainers promote the exact version to `latest` using npm's interactive WebAuthn flow.
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "dlvr.sh File Delivery"
+  short_description: "Share and receive files safely with dlvr.sh"
+  default_prompt: "Use $dlvr to share these local files and return the temporary link."
