@@ -38,7 +38,7 @@ bun run verify
 
 Releases for `@dlvr/cli`, `@dlvr/sdk`, and `@dlvr/mcp` are built by `.github/workflows/publish.yml` from package-specific tags and initially published under the npm `next` tag: `cli-vX.Y.Z`, `sdk-vX.Y.Z`, or `mcp-vX.Y.Z`.
 
-`@dlvr/n8n-nodes-dlvr` releases only from the standalone [`dlvr-sh/n8n-nodes-dlvr`](https://github.com/dlvr-sh/n8n-nodes-dlvr) repository with a `vX.Y.Z` tag.
+`@dlvr/n8n-nodes-dlvr` releases from this monorepo with an `n8n-vX.Y.Z` tag. Its former standalone repository remains available as the immutable source and provenance history for version `0.1.6`.
 
 After installation and live smoke tests, maintainers promote the exact version to `latest` using npm's interactive WebAuthn flow.
 

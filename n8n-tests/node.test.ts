@@ -8,7 +8,7 @@ test('node exposes the complete delivery operation set and AI tool support', () 
 	expect(operation?.options?.map(({ value }) => value)).toEqual(['create', 'delete', 'download', 'get', 'list']);
 });
 
-test('package metadata matches the dedicated Creator Portal repository', async () => {
+test('package metadata matches the public monorepo and remains Portal-compatible', async () => {
 	const packageJson = await Bun.file(new URL('../n8n/package.json', import.meta.url)).json();
 	const codex = await Bun.file(
 		new URL('../n8n/nodes/Dlvr/Dlvr.node.json', import.meta.url),
@@ -19,7 +19,8 @@ test('package metadata matches the dedicated Creator Portal repository', async (
 
 	expect(packageJson.repository).toEqual({
 		type: 'git',
-		url: 'https://github.com/dlvr-sh/n8n-nodes-dlvr.git',
+		url: 'https://github.com/dlvr-sh/packages.git',
+		directory: 'n8n',
 	});
 	expect(packageJson.scripts.test).toBeUndefined();
 	expect(codex.node).toBe(packageJson.name);
@@ -28,4 +29,15 @@ test('package metadata matches the dedicated Creator Portal repository', async (
 		{ url: 'https://dlvr.sh/docs/n8n/#credentials' },
 	]);
 	expect(credential).toContain("documentationUrl = 'https://dlvr.sh/docs/n8n/#credentials'");
+});
+
+test('Creator Portal compatibility credential mirrors the canonical source', async () => {
+	const canonical = await Bun.file(
+		new URL('../n8n/credentials/DlvrApi.credentials.ts', import.meta.url),
+	).text();
+	const discoverable = await Bun.file(
+		new URL('../credentials/DlvrApi.credentials.ts', import.meta.url),
+	).text();
+
+	expect(discoverable).toBe(canonical);
 });
